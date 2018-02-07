@@ -1,0 +1,5 @@
+<div class="device-layout">
+    <div *ngFor="let device of devices | async">
+        <app-device-detail [device]='device'></app-device-detail>
+    </div>
+</div>

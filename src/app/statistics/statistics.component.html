@@ -1,0 +1,12 @@
+<p>
+    statistics works!
+</p>
+
+<div>
+    <div class="main-layout">
+        <div style="width: 600px">
+            <canvas *ngIf="lineChartData" baseChart width="200" height="50" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">        
+                </canvas>
+        </div>
+    </div>
+</div>

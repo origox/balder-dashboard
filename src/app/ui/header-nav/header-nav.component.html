@@ -1,0 +1,11 @@
+<mat-toolbar color="primary">
+<!--     <span>{{title}}</span>
+ -->    <mat-toolbar-row>
+        <!--<div class="app-content">-->
+        <button class="header-btn" mat-raised-button color="accent" routerLink="/">Home</button>
+        <button class="header-btn" mat-raised-button color="accent" routerLink="/devices">Devices</button>
+        <button class="header-btn" mat-raised-button color="accent" routerLink="/statistics">Statistics</button>
+        <span style="flex: 1 1 auto;"></span>
+        <app-user-login></app-user-login>
+    </mat-toolbar-row>
+</mat-toolbar>

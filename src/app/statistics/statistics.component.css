@@ -1,0 +1,7 @@
+#main-layout {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh);
+}

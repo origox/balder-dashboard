@@ -1,0 +1,4 @@
+.device-layout {
+    display: flex;
+    flex-wrap: wrap;
+}

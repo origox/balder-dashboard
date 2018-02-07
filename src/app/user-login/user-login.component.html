@@ -1,0 +1,2 @@
+<button *ngIf="!( user | async)?.uid" mat-mini-fab (click)="signInWithGoogle()"><mat-icon>lock_closed</mat-icon></button>
+<button *ngIf="( user | async)?.uid" mat-mini-fab (click)="signOut()"><mat-icon>lock_open</mat-icon></button>

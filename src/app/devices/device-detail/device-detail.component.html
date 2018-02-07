@@ -1,0 +1,49 @@
+<mat-card class="device-card">
+    <mat-card-title-group>
+        <!-- <mat-card-title>{{device.$key}}</mat-card-title> -->
+        <mat-card-subtitle>{{device.deviceMetadata.types}}</mat-card-subtitle>
+
+        <div [ngSwitch]="device.deviceMetadata.types">
+            <img mat-card-sm-image *ngSwitchCase="'TEMP/HUM'" src="../assets/images/temp-sensor.jpg">
+
+            <div *ngSwitchCase="'PIR'">
+                <img mat-card-sm-image *ngIf="device.properties.state" src="../assets/images/alert-on.png">
+                <img mat-card-sm-image *ngIf="!device.properties.state" src="../assets/images/alert-off.png">
+            </div>
+
+            <div *ngSwitchCase="'LED'">
+                <img mat-card-sm-image *ngIf="device.properties.state" src="../assets/images/bulb-on.jpg">
+                <img mat-card-sm-image *ngIf="!device.properties.state" src="../assets/images/bulb-off.jpg">
+            </div>
+        </div>
+    </mat-card-title-group>
+    <mat-card-content>
+        <div *ngIf="device.properties.temp">
+            <p>
+                {{ device.properties.temp}}*C {{ device.properties.humidity}}% 
+                <button class="button" routerLink="../statistics">
+                    ...
+                </button>
+            </p>
+        </div>
+        <div *ngIf="device.deviceMetadata.types=='PIR'">
+            <p>
+                {{ device.properties.state==false ? 'Nobody is here' : 'Someone is here'}} 
+                <button class="button" (click)='onActuatorEvent(device.key, device.properties.state === 0 ? 1 : 0)'>
+                    {{device.properties.state === 0 ? "0" : "1"}}
+                </button>
+            </p>
+        </div>
+        <div *ngIf="device.deviceMetadata.types=='LED'">
+            <p>
+                {{ device.properties.state==0 ? 'OFF' : 'ON'}} 
+                <button class="button" (click)='onActuatorEvent(device.key, device.properties.state === 0 ? 1 : 0)'>
+                    {{device.properties.state === 0 ? "0" : "1"}}
+                </button>
+            </p>
+        </div>
+    </mat-card-content>
+    <mat-card-actions>
+    </mat-card-actions>
+
+</mat-card>
