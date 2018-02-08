@@ -7,10 +7,22 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthService {
-  user: Observable<firebase.User>;
+  public user: Observable<firebase.User>;
+  private userDetails: firebase.User = null;
 
   constructor(private afAuth: AngularFireAuth) {
     this.user = afAuth.authState;
+
+    this.user.subscribe(
+      (user) => {
+        if (user) {
+          this.userDetails = user;
+          console.log(this.userDetails);
+        } else {
+          this.userDetails = null;
+        }
+      }
+    );
   }
 
   googleLogin() {

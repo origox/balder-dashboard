@@ -38,14 +38,15 @@ export class StatisticsComponent implements OnInit {
     this.logs = this.DevicesService.getTempList(); //  db.list('devices/mydhtsensor1/logs');
 
     this.logs.subscribe(logs => {
+      const len = logs.length;
       // items is an array
       let i = 0;
-      let d = new Array(70);
-      let l = new Array(70);
+      let d = new Array(len);
+      let l = new Array(len);
       logs.forEach(log => {
         //console.log('Item:', log.temp);
-        if (i < 70) {
-          d[i] = log.temp;
+        if (i < len) {
+          d[i] = log.level;
           l[i] = i;
         }
         i++;
@@ -61,16 +62,16 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
-   public chartClicked(e: any): void {
+  public chartClicked(e: any): void {
     console.log(e);
 
 
-    this.lineChartData = [
-      { data: [65, 59, 80, 81, 56, 55, 40, 95], label: 'Series A2' },
-      { data: [28, 48, 40, 19, 86, 27, 90, 96], label: 'Series B2' },
-      { data: [28, 28, 20, 29, 26, 27, 20, 97], label: 'Series B4' }
-    ];
-    this.lineChartLabels.push('APA');
+    /*  this.lineChartData = [
+       { data: [65, 59, 80, 81, 56, 55, 40, 95], label: 'Series A2' },
+       { data: [28, 48, 40, 19, 86, 27, 90, 96], label: 'Series B2' },
+       { data: [28, 28, 20, 29, 26, 27, 20, 97], label: 'Series B4' }
+     ];
+     this.lineChartLabels.push('APA'); */
 
   }
 
@@ -78,5 +79,12 @@ export class StatisticsComponent implements OnInit {
     console.log(e);
   }
 
+  private addData(chart: any, label: String, data: Number) {
+    chart.data.labels.push(label);
+    chart.data.datasets.forEach((dataset) => {
+      dataset.data.push(data);
+    });
+    chart.update();
+  }
 
 }

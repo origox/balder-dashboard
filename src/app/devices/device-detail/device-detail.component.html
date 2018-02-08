@@ -1,49 +1,90 @@
 <mat-card class="device-card">
     <mat-card-title-group>
-        <!-- <mat-card-title>{{device.$key}}</mat-card-title> -->
-        <mat-card-subtitle>{{device.deviceMetadata.types}}</mat-card-subtitle>
+        <!-- <mat-card-title>APA - {{device.key}}</mat-card-title> -->
+        <!-- <mat-card-subtitle>{{device.type}}</mat-card-subtitle> -->
 
-        <div [ngSwitch]="device.deviceMetadata.types">
-            <img mat-card-sm-image *ngSwitchCase="'TEMP/HUM'" src="../assets/images/temp-sensor.jpg">
+        <div [ngSwitch]="device.type">
 
-            <div *ngSwitchCase="'PIR'">
-                <img mat-card-sm-image *ngIf="device.properties.state" src="../assets/images/alert-on.png">
-                <img mat-card-sm-image *ngIf="!device.properties.state" src="../assets/images/alert-off.png">
+            <div *ngSwitchCase="'temperature'">
+                <img mat-card-sm-image src="../assets/images/temp-sensor.jpg">
             </div>
 
-            <div *ngSwitchCase="'LED'">
-                <img mat-card-sm-image *ngIf="device.properties.state" src="../assets/images/bulb-on.jpg">
-                <img mat-card-sm-image *ngIf="!device.properties.state" src="../assets/images/bulb-off.jpg">
+            <div *ngSwitchCase="'alarm'">
+                    <i class="material-icons" *ngIf="device.level === 'on'" style="color:red">notifications_active</i>
+                    <i class="material-icons" *ngIf="device.level === 'off'" style="color: green">notifications</i>
+                <!-- <img mat-card-sm-image *ngIf="device.level === 'on'" src="../assets/images/a.jpg">
+                <img mat-card-sm-image *ngIf="device.level === 'off'" src="../assets/images/alert-off.png"> -->
+            </div>
+
+            <div *ngSwitchCase="'actuator'">
+                <img mat-card-sm-image *ngIf="device.level === 'on'" src="../assets/images/bulb-on.jpg">
+                <img mat-card-sm-image *ngIf="device.level === 'off'" src="../assets/images/bulb-off.jpg">
+            </div>
+
+            <div *ngSwitchCase="'power'">
+                <img mat-card-sm-image *ngIf="device.level" src="../assets/images/bulb-on.jpg">
+                <img mat-card-sm-image *ngIf="!device.level" src="../assets/images/bulb-off.jpg">
+            </div>
+
+            <div *ngSwitchCase="'light'">
+                <mat-icon>home</mat-icon>
+                <!-- </mat-icon> <img mat-card-sm-image *ngIf="device.level"> -->
             </div>
         </div>
     </mat-card-title-group>
     <mat-card-content>
-        <div *ngIf="device.properties.temp">
-            <p>
-                {{ device.properties.temp}}*C {{ device.properties.humidity}}% 
-                <button class="button" routerLink="../statistics">
-                    ...
-                </button>
-            </p>
-        </div>
-        <div *ngIf="device.deviceMetadata.types=='PIR'">
-            <p>
-                {{ device.properties.state==false ? 'Nobody is here' : 'Someone is here'}} 
-                <button class="button" (click)='onActuatorEvent(device.key, device.properties.state === 0 ? 1 : 0)'>
-                    {{device.properties.state === 0 ? "0" : "1"}}
-                </button>
-            </p>
-        </div>
-        <div *ngIf="device.deviceMetadata.types=='LED'">
+        <div [ngSwitch]="device.type">
+            <div *ngSwitchCase="'temperature'">
+                <p>
+                    {{ device.level}}*C
+                    <button class="button" routerLink="../statistics">
+                        ...
+                    </button>
+                </p>
+            </div>
+            <div *ngSwitchCase="'power'">
+                <p>
+                    {{ device.level}}W
+                    <button class="button" routerLink="../statistics">
+                        ...
+                    </button>
+                </p>
+            </div>
+            <div *ngSwitchCase="'alarm'">
+                <p>
+                    {{ device.level=== 'off' ? 'Nobody is here' : 'Someone is here'}}
+                    <button class="button" (click)="onActuatorEvent(device.key, device.level)">
+                        {{device.level}}
+                    </button>
+                </p>
+            </div>
+            <div *ngSwitchCase="'actuator'">
+                <p>
+                    {{ device.level=== 'on' ? 'on' : 'off'}}
+                    <button mat-raised-button color="primary" (click)="onActuatorEvent(device.key, device.level === 'on' ? 'off' : 'on')">
+                        {{device.level}}
+                    </button>
+                </p>
+            </div>
+            <!-- <div *ngIf="device.type === 'temperature'">
             <p>
                 {{ device.properties.state==0 ? 'OFF' : 'ON'}} 
                 <button class="button" (click)='onActuatorEvent(device.key, device.properties.state === 0 ? 1 : 0)'>
                     {{device.properties.state === 0 ? "0" : "1"}}
                 </button>
             </p>
+        </div> -->
         </div>
     </mat-card-content>
+
     <mat-card-actions>
+         <!--    <i class="material-icons">face</i>
+            <i class="material-icons">add_alert</i> -->
+        <button mat-button routerLink="../">HOME</button>
+        <button mat-button routerLink="../statistics">STAT</button>
+        <button mat-button class="button" (click)="onActuatorEvent(device.key, device.level === 'on' ? 'off' : 'on')">
+                {{device.level}}
+            </button>
     </mat-card-actions>
 
 </mat-card>

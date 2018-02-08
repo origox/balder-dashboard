@@ -20,6 +20,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
 
 // Devices
 import { DevicesService } from './devices/devices.service';
+import { SensorService } from './devices/sensor.service';
 import { DeviceListComponent } from './devices/device-list/device-list.component';
 import { DeviceDetailComponent } from './devices/device-detail/device-detail.component';
 import { StatisticsComponent } from './statistics/statistics.component';
@@ -49,7 +50,7 @@ import { OverviewComponent } from './overview/overview.component';
     AngularFireAuthModule,
     ChartsModule
   ],
-  providers: [AuthService, DevicesService],
+  providers: [AuthService, DevicesService, SensorService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

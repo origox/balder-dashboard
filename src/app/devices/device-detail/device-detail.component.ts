@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DevicesService } from '../devices.service';
+import { SensorService } from '../sensor.service';
+
 
 @Component({
   selector: 'app-device-detail',
@@ -20,16 +22,16 @@ export class DeviceDetailComponent implements OnInit {
   ngOnInit() {
   }
 
-  onActuatorEvent(key: any, value: number) {
-    this.checked = value === 1 ? false : true;
-    console.log(`onActuatorEvent - ${value} checked: ${this.checked} key: ${key}`);
+  onActuatorEvent(key: any, value: string) {
+    // this.checked = value === 1 ? false : true;
+    // console.log(`onActuatorEvent - ${value} checked: ${this.checked} key: ${key}`);
 
-    //this.deviceService.updateDevice(this.device.$key, { 'properties': { 'time': Date(), 'state': value } });
-    this.deviceService.updateDevice(key, { 'properties': { 'time': Date(), 'state': value } });
+    // this.deviceService.updateDevice(this.device.$key, { 'properties': { 'time': Date(), 'state': value } });
+    this.deviceService.updateDevice(key, { 'time': Date(), 'level': value});
   }
 
   isState() {
-    
+
   }
 
 }
