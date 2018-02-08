@@ -1,48 +1,107 @@
 <mat-card class="device-card">
-    <mat-card-title-group>
-        <mat-card-title>APA - {{device.key}}</mat-card-title>
+    <mat-card-header>
+        <i mat-card-avatar class="material-icons" style="color:blue">fingerprint</i>
+        <!-- <img mat-card-avatar src="https://source.unsplash.com/random/200x200"> -->
+        <mat-card-title>{{device.key}}</mat-card-title>
         <mat-card-subtitle>{{device.location}}</mat-card-subtitle>
+    </mat-card-header>
+    <div [ngSwitch]="device.type">
 
-        <div [ngSwitch]="device.type">
+        <div *ngSwitchCase="'temperature'">
+            <!--   <img mat-card-sm-image class="iot-img" src="../assets/images/temp-sensor.jpg"> -->
 
-            <div *ngSwitchCase="'temperature'">
-                <img mat-card-sm-image class="iot-img" src="../assets/images/temp-sensor.jpg">
-            </div>
-
-            <div *ngSwitchCase="'alarm'">
-                <i class="material-icons iot-img" *ngIf="device.level === 'on'" style="color:red">notifications_active</i>
-                <i class="material-icons iot-img" *ngIf="device.level === 'off'" style="color: green">notifications</i>
-                <!-- <img mat-card-sm-image *ngIf="device.level === 'on'" src="../assets/images/a.jpg">
-                <img mat-card-sm-image *ngIf="device.level === 'off'" src="../assets/images/alert-off.png"> -->
-            </div>
-
-            <div *ngSwitchCase="'actuator'">
-                <img mat-card-sm-image *ngIf="device.level === 'on'" class="iot-img" src="../assets/images/bulb-on.jpg">
-                <img mat-card-sm-image *ngIf="device.level === 'off'" class="iot-img" src="../assets/images/bulb-off.jpg">
-            </div>
-
-            <div *ngSwitchCase="'power'">
-                <img mat-card-sm-image *ngIf="device.level" class="iot-img" src="../assets/images/bulb-on.jpg">
-                <img mat-card-sm-image *ngIf="!device.level" class="iot-img" src="../assets/images/bulb-off.jpg">
-            </div>
-
-            <div *ngSwitchCase="'light'">
-                <mat-icon class="iot-img">home</mat-icon>
-                <!-- </mat-icon> <img mat-card-sm-image *ngIf="device.level"> -->
-            </div>
+            <mat-grid-list cols="2">
+                <mat-grid-tile [style.border-right]="'1px dashed #ddd'">
+                    {{ device.level}}*C
+                </mat-grid-tile>
+                <mat-grid-tile [style.border-right]="'1px dashed #ddd'">
+                    <img mat-card-sm-image class="iot-img" src="../assets/images/temp-sensor.jpg">
+                </mat-grid-tile>
+            </mat-grid-list>
         </div>
-    </mat-card-title-group>
+
+        <div *ngSwitchCase="'alarm'">
+            <!-- <i class="material-icons iot-img" *ngIf="device.level === 'on'" style="color:red">notifications_active</i>
+            <i class="material-icons iot-img" *ngIf="device.level === 'off'" style="color: green">notifications</i>
+             -->
+            <!-- <img mat-card-sm-image *ngIf="device.level === 'on'" src="../assets/images/a.jpg">
+                <img mat-card-sm-image *ngIf="device.level === 'off'" src="../assets/images/alert-off.png"> -->
+            <mat-grid-list cols="2">
+                <mat-grid-tile [style.border-right]="'1px dashed #ddd'">
+                    {{ device.level}}
+                </mat-grid-tile>
+                <mat-grid-tile [style.border-right]="'1px dashed #ddd'">
+                    <i class="material-icons iot-img" *ngIf="device.level === 'on'" style="color:red">notifications_active</i>
+                    <i class="material-icons iot-img" *ngIf="device.level === 'off'" style="color: green">notifications</i>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </div>
+
+
+        <div *ngSwitchCase="'actuator'">
+            <mat-grid-list cols="2">
+                <mat-grid-tile [style.border-right]="'1px dashed #ddd'">
+                    <button mat-fab color="primary" (click)="onActuatorEvent(device.key, device.level === 'on' ? 'off' : 'on')">
+                        {{device.level}}
+                    </button>
+                </mat-grid-tile>
+                <mat-grid-tile [style.border-right]="'1px dashed #ddd'">
+                    <img mat-card-sm-image *ngIf="device.level === 'on'" class="iot-img" src="../assets/images/bulb-on.jpg">
+                    <img mat-card-sm-image *ngIf="device.level === 'off'" class="iot-img" src="../assets/images/bulb-off.jpg">
+                </mat-grid-tile>
+            </mat-grid-list>
+
+        </div>
+
+        <div *ngSwitchCase="'power'">
+            <mat-grid-list cols="2">
+                <mat-grid-tile [style.border-right]="'1px dashed #ddd'">
+                    {{device.level}} W
+                </mat-grid-tile>
+                <mat-grid-tile [style.border-right]="'1px dashed #ddd'">
+                    <img mat-card-sm-image *ngIf="device.level" class="iot-img" src="../assets/images/bulb-on.jpg">
+                    <img mat-card-sm-image *ngIf="!device.level" class="iot-img" src="../assets/images/bulb-off.jpg">
+                </mat-grid-tile>
+            </mat-grid-list>
+
+        </div>
+
+        <div *ngSwitchCase="'GW-ZWAVE'">
+            <mat-grid-list cols="2">
+                <mat-grid-tile [style.border-right]="'1px dashed #ddd'">
+                    {{ device.level}}*C
+                </mat-grid-tile>
+                <mat-grid-tile [style.border-right]="'1px dashed #ddd'">
+                    <img mat-card-sm-image class="iot-img" src="../assets/images/temp-sensor.jpg">
+                </mat-grid-tile>
+            </mat-grid-list>
+
+        </div>
+
+        <div *ngSwitchCase="'sensor'">
+                <mat-grid-list cols="2">
+                        <mat-grid-tile [style.border-right]="'1px dashed #ddd'">
+                            {{device.level}} Lux
+                        </mat-grid-tile>
+                        <mat-grid-tile [style.border-right]="'1px dashed #ddd'">
+                                <mat-icon class="iot-img">wb_incandescent</mat-icon>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+            
+            <!-- </mat-icon> <img mat-card-sm-image *ngIf="device.level"> -->
+        </div>
+    </div>
     <mat-card-content>
         <div [ngSwitch]="device.type">
-            <div *ngSwitchCase="'temperature'">
+            <!-- <div *ngSwitchCase="'temperature'">
                 <p>
                     {{ device.level}}*C
                     <button class="button" routerLink="../statistics">
                         ...
                     </button>
                 </p>
-            </div>
-            <div *ngSwitchCase="'power'">
+            </div> -->
+            <!-- <div *ngSwitchCase="'power'">
                 <p>
                     {{ device.level}}W
                     <button class="button" routerLink="../statistics">
@@ -57,15 +116,8 @@
                         {{device.level}}
                     </button>
                 </p>
-            </div>
-            <div *ngSwitchCase="'actuator'">
-                <p>
-                    {{ device.level=== 'on' ? 'on' : 'off'}}
-                    <button mat-raised-button color="primary" (click)="onActuatorEvent(device.key, device.level === 'on' ? 'off' : 'on')">
-                        {{device.level}}
-                    </button>
-                </p>
-            </div>
+            </div> -->
+
             <!-- <div *ngIf="device.type === 'temperature'">
             <p>
                 {{ device.properties.state==0 ? 'OFF' : 'ON'}} 

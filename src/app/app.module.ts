@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatButtonModule, MatButtonToggleModule, MatCardModule, MatIconModule } from '@angular/material';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -44,6 +45,7 @@ import { OverviewComponent } from './overview/overview.component';
     BrowserModule,
     BrowserAnimationsModule,
     MatToolbarModule, MatButtonModule, MatButtonToggleModule, MatCardModule, MatIconModule,
+    MatGridListModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
