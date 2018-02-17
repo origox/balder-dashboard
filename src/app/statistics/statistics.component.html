@@ -5,8 +5,21 @@
 <div>
     <div class="main-layout">
         <div style="width: 600px">
-            <canvas *ngIf="lineChartData" baseChart width="200" height="50" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">        
-                </canvas>
+            <canvas *ngIf="lineChartData" baseChart width="200" height="100" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+                [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+            </canvas>
+        </div>
+    </div>
+</div>
+
+
+<div>
+    <div class="main-layout">
+        <div style="width: 600px">
+            <canvas *ngIf="lineChartPirData" baseChart width="200" height="100" [datasets]="lineChartPirData" [labels]="lineChartPirLabels"
+                [options]="lineChartOptions" [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)">
+            </canvas>
         </div>
     </div>
 </div>

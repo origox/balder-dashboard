@@ -28,4 +28,7 @@ export class DevicesService {
     return this.db.list<any[]>('telemetry/GW-ZWAVE-0001').valueChanges();
   }
 
+  getPirList():  Observable<any[]> {
+    return this.db.list<any[]>('telemetry/pir0001').valueChanges();
+  }
 }

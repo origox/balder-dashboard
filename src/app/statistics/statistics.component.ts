@@ -15,6 +15,9 @@ import { Observable } from 'rxjs/Observable';
 export class StatisticsComponent implements OnInit {
 
   logs: Observable<any[]>;
+  private pirlogs: Observable<any[]>;
+  public lineChartPirData: Array<any>;
+  public lineChartPirLabels: Array<any>;
   public lineChartData: Array<any>;
   public lineChartLabels: Array<any>;
 
@@ -44,7 +47,7 @@ export class StatisticsComponent implements OnInit {
       let d = new Array(len);
       let l = new Array(len);
       logs.forEach(log => {
-        //console.log('Item:', log.temp);
+        // console.log('Item:', log.temp);
         if (i < len) {
           d[i] = log.level;
           l[i] = i;
@@ -59,6 +62,36 @@ export class StatisticsComponent implements OnInit {
       ];
 
       console.log(this.lineChartData[0]);
+
+      this.createPirGraph();
+    });
+  }
+
+  private createPirGraph() {
+    this.pirlogs = this.DevicesService.getPirList();
+
+    this.pirlogs.subscribe(logs => {
+      const len = 100; // logs.length;
+      // items is an array
+      let i = 0;
+      let d = new Array(len);
+      let l = new Array(len);
+      logs.forEach(log => {
+        // console.log('Item:', log.temp);
+        if (i < 100) {
+          d[i] = log.level === 'on' ? 1 : 0;
+          l[i] = i;
+        }
+        i++;
+
+      });
+
+      this.lineChartPirLabels = l;
+      this.lineChartPirData = [
+        { data: d, label: 'ON/OFF' }
+      ];
+
+      console.log(this.lineChartPirData[0]);
     });
   }
 
