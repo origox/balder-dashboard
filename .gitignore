@@ -44,3 +44,5 @@ Thumbs.db
 
 # Config
 environment.ts
+environment.prod.ts
+.firebaserc
